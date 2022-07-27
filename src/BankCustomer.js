@@ -1,28 +1,33 @@
-const Bank = require("./Bank")
 const BankGateway = require("./BankGateway")
-const fakeCustomers = require("./fakeCustomers")
+class BankCustomer{
 
-class BankCustomer extends Bank{
-
-    constructor({name , fname , id , balance }){
-        super()
+    constructor({name , fname , id , balance  , bank}){
         this.name = name
         this.fname = fname
         this.id = id
         this.balance = balance
+        this.bank = bank
+    }
+
+    get amount(){
+        return `\nyour amount is : ${this.balance}$`
     }
 
 
-    get Balance(){
-        return this.Balance
+    updateBalance(newBalance){
+        this.balance = newBalance
     }
-
-
+    
 
     transfer(destination , amount ){
-        const bankGateway = new BankGateway(this.id , destination , this.balance , amount)
+    
+        const bankGateway = new BankGateway(this.id , destination , this.balance , amount , this.bank)
         let message = bankGateway.startTransfer()
-        console.log(message)
+        if(message['status']){
+            this.updateBalance(message['newBalance'])
+            
+        }
+        return message
     }
 
 }

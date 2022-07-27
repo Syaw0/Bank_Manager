@@ -1,6 +1,4 @@
 const fakeCustomer = require("./fakeCustomers")
-
-
 class Bank {
     constructor(){
         //query to db
@@ -8,7 +6,6 @@ class Bank {
     }
 
     set updateDb(newDb){
-        this.customers = []
         this.customers = [...newDb]
     }
 }
